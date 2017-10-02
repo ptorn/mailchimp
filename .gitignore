@@ -1,0 +1,8 @@
+/.bin
+/build
+/vendor
+/cache
+.scaffold
+memory::
+composer.lock
+/config/database.php
