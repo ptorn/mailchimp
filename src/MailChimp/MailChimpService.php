@@ -22,7 +22,7 @@ class MailChimpService
     {
         $this->mailChimp = new MailChimp();
         $this->mailChimp->setDb($di->get("db"));
-
+        $this->mailChimp->init();
         $this->mailChimpList = new MailChimpList();
         $this->mailChimpList->setDb($di->get("db"));
         $this->mailChimp->defaultlList = $this->getDefaultList();
@@ -47,5 +47,19 @@ class MailChimpService
     public function addSubscriber($email, $firstname = "", $lastname = "")
     {
         $this->mailChimp->addSubscriber($email, $firstname, $lastname);
+    }
+
+
+
+    public function getApiKey()
+    {
+        return $this->mailChimp->apiKey;
+    }
+
+
+
+    public function getEndpointUrl()
+    {
+        return $this->mailChimp->getEndpointUrl();
     }
 }
