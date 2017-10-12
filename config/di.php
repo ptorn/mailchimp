@@ -117,5 +117,22 @@ return [
                 return $obj;
             }
         ],
+        "utils" => [
+            "shared" => true,
+            "callback" => function () {
+                $utils = new Peto16\Utils\Utils();
+                $utils->setDI($this);
+                return $utils;
+            }
+        ],
+        "navbar" => [
+            "shared" => true,
+            "callback" => function () {
+                $navbar = new \Peto16\Navbar\Navbar();
+                $navbar->configure("navbar.php");
+                $navbar->setDI($this);
+                return $navbar;
+            }
+        ],
     ],
 ];
