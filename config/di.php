@@ -16,7 +16,6 @@ return [
         ],
         "response" => [
             "shared" => true,
-            //"callback" => "\Anax\Response\Response",
             "callback" => function () {
                 $obj = new \Anax\Response\ResponseUtility();
                 $obj->setDI($this);
@@ -88,7 +87,8 @@ return [
         "pageRender" => [
             "shared" => true,
             "callback" => function () {
-                $obj = new \Anax\Page\PageRender();
+                // $obj = new \Anax\Page\PageRender();
+                $obj = new \Peto16\Utils\Utils();
                 $obj->setDI($this);
                 return $obj;
             }

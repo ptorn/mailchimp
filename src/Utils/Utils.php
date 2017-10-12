@@ -33,6 +33,12 @@ class Utils implements PageRenderInterface, InjectionAwareInterface
             "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
             "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         ];
+        $data["javascripts"] = [
+            "https://code.jquery.com/jquery-3.2.1.slim.min.js",
+            "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
+        ];
+
+
 
         // Get view object.
         $view = $this->di->get("view");
