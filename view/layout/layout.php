@@ -19,33 +19,40 @@
         </div>
         <?php endif; ?>
 
-        <div class="container">
-            <?php if ($this->regionHasContent("header")) : ?>
-            <div class="header">
-                <div class="row-fluid">
-                    <div class="header">
-                        <?php $this->renderRegion("header") ?>
-                    </div>
+        <?php if ($this->regionHasContent("header")) : ?>
+        <div class="header">
+            <div class="row-fluid">
+                <div class="header">
+                    <?php $this->renderRegion("header") ?>
                 </div>
             </div>
+        </div>
+        <?php endif; ?>
+        <div class="container-fluid">
+            <div class="row-fluid">
+            <?php if ($this->regionHasContent("main")) : ?>
+                <main class="span9 main">
+                    <?php $this->renderRegion("main") ?>
+                    <?php if ($this->regionHasContent("main")) : ?>
+                        <?php $this->renderRegion("comments") ?>
+                    <?php endif; ?>
+                </main>
             <?php endif; ?>
 
-            <?php if ($this->regionHasContent("main")) : ?>
-            <div class="main">
-                <div class="row-fluid">
-                    <main class="main">
-                        <?php $this->renderRegion("main") ?>
-                        <?php if ($this->regionHasContent("main")) : ?>
-                            <?php $this->renderRegion("comments") ?>
-                        <?php endif; ?>
-                    </main>
+            <?php if ($this->regionHasContent("sidebar-right")) : ?>
+                <div class="span3 sidebar-right">
+                    <?php $this->renderRegion("main") ?>
+                    <?php if ($this->regionHasContent("main")) : ?>
+                        <?php $this->renderRegion("comments") ?>
+                    <?php endif; ?>
                 </div>
-            </div>
             <?php endif; ?>
+            </div>
+
 
             <?php if ($this->regionHasContent("footer")) : ?>
-            <div class="footer">
-                <div class="row-fluid">
+            <div class="row-fluid">
+                <div class="footer">
                     <div class="center-block text-center">
                         <div class="block site-footer">
                             <?php $this->renderRegion("footer") ?>
