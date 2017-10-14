@@ -20,6 +20,7 @@ class MailChimpController implements InjectionAwareInterface
     private $pageRender;
 
 
+
     /**
      * Initiate the controller.
      * @return void
@@ -37,11 +38,13 @@ class MailChimpController implements InjectionAwareInterface
     }
 
 
+
     public function getAccount()
     {
         $this->response->sendJson($this->mailChimp->sendRequest("GET", ["reports"]));
         exit;
     }
+
 
 
     public function getList()
@@ -71,10 +74,28 @@ class MailChimpController implements InjectionAwareInterface
     }
 
 
-    public function getListSubscribers()
+
+    public function getListSubscribersJSON()
     {
-        $data = $this->mailChimp->getSubscribers();
+        $data = $this->mailChimp->getSubscribersDefaultList();
         $this->response->sendJson($data);
         exit;
+    }
+
+
+
+    public function getPostBlockSidebar()
+    {
+        if ($this->mailChimp->widget === 1) {
+            $title      = "Add email to mailinglist";
+            $form       = new SubscribeForm($this->di);
+
+            $form->check();
+
+            $data = [
+                "form" => $form->getHTML(),
+            ];
+            $this->view->add("mailchimp/subscribe", $data, "sidebar-right");
+        }
     }
 }

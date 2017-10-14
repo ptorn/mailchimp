@@ -16,4 +16,3 @@ $urlToCreate = url("user/create");
 ?><h1>Administration</h1>
 
 <?= $form ?>
-<a href="<?= $urlToCreate ?>">Skapa användare</a>

@@ -23,8 +23,14 @@ return [
             "file" => __DIR__ . "/route/debug.php",
         ],
         [
+            // For debugging and development details on Anax
+            "mount" => "",
+            "file" => __DIR__ . "/route/frontpageController.php",
+        ],
+        [
             // To read flat file content in Markdown from content/
             "mount" => null,
+            "sort" => 998,
             "file" => __DIR__ . "/route/flat-file-content.php",
         ],
         [

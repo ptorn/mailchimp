@@ -1,6 +1,6 @@
 <?php
 
-namespace Peto16\MailChimp\HTMLForm;
+namespace Peto16\Admin\HTMLForm;
 
 use \Anax\HTMLForm\FormModel;
 use \Anax\DI\DIInterface;
@@ -9,7 +9,7 @@ use \Peto16\MailChimp\MailChimpService;
 /**
  * Example of FormModel implementation.
  */
-class SubscribeForm extends FormModel
+class MailChimpConfigForm extends FormModel
 {
     /**
      * Constructor injects with DI container.
@@ -19,34 +19,45 @@ class SubscribeForm extends FormModel
     public function __construct(DIInterface $di)
     {
         parent::__construct($di);
+        $mailChimpService = $di->get("mailChimpService");
+        $allListsData = $mailChimpService->getAllLists();
+        $allLists = [];
+        if ($allListsData !== null) {
+            foreach ($allListsData as $list) {
+                $allLists = array_merge($allLists, $list);
+            }
+        }
 
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => "Subscribe"
+                "legend" => ""
             ],
             [
-                "Email" => [
-                    "type"        => "email",
-                    "required"    => true,
+                "ApiKey" => [
+                    "type"        => "text",
+                    "value"       => htmlspecialchars($mailChimpService->getApiKey()),
                     // "description" => "Here you can place a description.",
                     // "placeholder" => "Here is a placeholder",
                 ],
 
-                "Firstname" => [
-                    "type"        => "text",
-                    //"description" => "Here you can place a description.",
-                    //"placeholder" => "Here is a placeholder",
+                "DefaultList" => [
+                    "type"        => "select",
+                    "label"       => "Select your default mailinglist:",
+                    "options"     => $allLists,
+                    "value"       => $mailChimpService->getDefaultList(),
                 ],
-                "Lastname" => [
-                    "type"        => "text",
-                    //"description" => "Here you can place a description.",
+
+                "Widget" => [
+                    "type"        => "checkbox",
+                    "checked"       => $mailChimpService->getWidgetStatus() === 1 ? 1 : 0,
+                    "description" => "Widget for sidebar.",
                     //"placeholder" => "Here is a placeholder",
                 ],
 
                 "submit" => [
                     "type" => "submit",
-                    "value" => "Subscribe",
+                    "value" => "Update",
                     "callback" => [$this, "callbackSubmit"]
                 ],
             ]
@@ -66,20 +77,21 @@ class SubscribeForm extends FormModel
         // Remember values during resubmit, useful when failing (retunr false)
         // and asking the user to resubmit the form.
         $this->form->rememberValues();
-        $email = $this->form->value("Email");
-        $fname = $this->form->value("Firstname") ? $this->form->value("Firstname") : "";
-        $lname = $this->form->value("Lastname") ? $this->form->value("Lastname") : "";
+        $apiKey = $this->form->value("ApiKey");
+        $widget = $this->form->value("Widget");
+        $defaultList = $this->form->value("DefaultList");
+        $apiKey = $apiKey === "" ? "null" : $apiKey;
 
         $mailChimpService = new MailChimpService($this->di);
 
         try {
-            $mailChimpService->addSubscriber($email, $fname, $lname);
-        } catch (\Peto16\MailChimp\Exception $e) {
+            $mailChimpService->addConfig($apiKey, $widget, $defaultList);
+        } catch (\Peto16\Admin\Exception $e) {
             $this->form->addOutput($e->getMessage());
             return false;
         }
         // return true;
-        $this->form->addOutput("Subscriber added.");
+        $this->form->addOutput("Configuration updated.");
         return true;
     }
 }

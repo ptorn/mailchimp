@@ -4,6 +4,7 @@ namespace Peto16\Admin;
 
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;
+use \Peto16\Admin\HTMLForm\MailChimpConfigForm;
 
 class AdminController implements InjectionAwareInterface
 {
@@ -13,6 +14,7 @@ class AdminController implements InjectionAwareInterface
     private $pageRender;
     private $redirect;
     private $view;
+    private $mailChimpService;
 
     public function init()
     {
@@ -22,6 +24,8 @@ class AdminController implements InjectionAwareInterface
         $this->response = $this->di->get("response");
         $this->view = $this->di->get("view");
         $this->pageRender = $this->di->get("pageRender");
+        $this->mailChimpService = $this->di->get("mailChimpService");
+
     }
 
 
@@ -41,7 +45,7 @@ class AdminController implements InjectionAwareInterface
             ], "main");
             $this->pageRender->renderPage(["title" => "Admin Dashboard"]);
         }
-        $this->response->redirect("login");
+        $this->response->redirect("user/login");
     }
 
 
@@ -49,19 +53,35 @@ class AdminController implements InjectionAwareInterface
     public function getMailChimp()
     {
         $user = $this->userService->getCurrentLoggedInUser();
-        $mailChimpService = $this->di->get("mailChimpService");
-        // $users = [];
         if ($user) {
-            // if ($user->administrator) {
-            //     $users = $this->userService->findAllUsers();
-            // }
-            $this->view->add("admin/mailchimp", [
-                "apiKey"          => $mailChimpService->getApiKey(),
-                "endpointUrl"     => $mailChimpService->getEndpointUrl(),
-                "defaultList"     => $mailChimpService->getDefaultList()
+            $title      = "MailChimp Configuration";
+            $form       = new MailChimpConfigForm($this->di);
+
+            $form->check();
+
+            $this->view->add("admin/mailChimpTabs", [], "main");
+            $this->view->add("admin/mailchimpConfig", [
+                "apiKey"          => $this->mailChimpService->getApiKey(),
+                "endpointUrl"     => $this->mailChimpService->getEndpointUrl(),
+                "defaultList"     => $this->mailChimpService->getDefaultList(),
+                "form"            => $form->getHTML(),
             ], "main");
             $this->pageRender->renderPage(["title" => "MailChimp Configuration"]);
         }
-        $this->response->redirect("login");
+        $this->response->redirect("user/login");
+    }
+
+
+
+    public function getListSubscribers()
+    {
+        $data = $this->mailChimpService->getSubscribersDefaultList();
+        $this->view->add("admin/mailChimpTabs", [], "main");
+
+        $this->view->add("mailchimp/listsubscribers", [
+            "data"  => $data,
+            "defaultListId"     => $this->mailChimpService->getDefaultList()
+        ], "main");
+        $this->pageRender->renderPage(["title" => "MailChimp Subscribers"]);
     }
 }

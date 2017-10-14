@@ -18,6 +18,7 @@
             </div>
         </div>
         <?php endif; ?>
+        <div class="container-fluid">
 
         <?php if ($this->regionHasContent("header")) : ?>
         <div class="header">
@@ -28,10 +29,14 @@
             </div>
         </div>
         <?php endif; ?>
-        <div class="container-fluid">
+        <div class="container mt-20">
             <div class="row-fluid">
             <?php if ($this->regionHasContent("main")) : ?>
-                <main class="span9 main">
+                <?php if ($this->regionHasContent("sidebar-right")) : ?>
+                    <main id="main" class="col-xs-12 col-md-9 main mb-20">
+                <?php else : ?>
+                    <main id="main" class="col-xs-12 col-md-12 main mb-20">
+                <?php endif ; ?>
                     <?php $this->renderRegion("main") ?>
                     <?php if ($this->regionHasContent("main")) : ?>
                         <?php $this->renderRegion("comments") ?>
@@ -40,19 +45,18 @@
             <?php endif; ?>
 
             <?php if ($this->regionHasContent("sidebar-right")) : ?>
-                <div class="span3 sidebar-right">
-                    <?php $this->renderRegion("main") ?>
-                    <?php if ($this->regionHasContent("main")) : ?>
-                        <?php $this->renderRegion("comments") ?>
-                    <?php endif; ?>
+                <div class="col-xs-12 col-md-3 sidebar-right">
+                    <?php $this->renderRegion("sidebar-right") ?>
                 </div>
             <?php endif; ?>
             </div>
+        </div>
+    </div>
 
-
+        <div id="footer" class="footer">
             <?php if ($this->regionHasContent("footer")) : ?>
             <div class="row-fluid">
-                <div class="footer">
+                <div class="col-xs-12">
                     <div class="center-block text-center">
                         <div class="block site-footer">
                             <?php $this->renderRegion("footer") ?>
@@ -60,9 +64,8 @@
                     </div>
                 </div>
             </div>
-            <?php endif; ?>
+        <?php endif; ?>
         </div>
-
 
         <?php foreach ($javascripts as $javascript) : ?>
             <script src="<?= $this->asset($javascript) ?>"></script>

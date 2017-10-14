@@ -1,4 +1,4 @@
-<div class="footer-author">Peder Tornberg - Ramverk1</div>
+<div class="footer-author">Peder Tornberg - MailChimp</div>
 <?php if ($this->regionHasContent("footer")) : ?>
 <div class="navbar-wrap">
     <?php

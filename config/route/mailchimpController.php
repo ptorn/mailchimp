@@ -21,10 +21,10 @@ return [
             "callable" => ["mailChimpController", "getPostSubscriber"],
         ],
         [
-            "info" => "Add email",
+            "info" => "List subscribers",
             "requestMethod" => "get",
             "path" => "listsubscribers",
             "callable" => ["mailChimpController", "getListSubscribers"],
         ],
-    ]
+    ],
 ];

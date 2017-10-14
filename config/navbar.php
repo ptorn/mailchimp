@@ -19,6 +19,26 @@ return [
                 "icon"  => "lock",
                 "title"  => "Admin",
                 "route" => "admin",
+                "submenu" => [
+                    "items" => [
+                        "dashboard" => [
+                            "icon"      => "home",
+                            "title"     => "Dashboard",
+                            "route"     => "admin",
+                        ],
+                        "mailchimp" => [
+                            "icon"      => "TBA",
+                            "title"     => "MailChimp",
+                            "route"     => "admin/mailchimp"
+                        ],
+                        "logout" => [
+                            "icon"      => "TBA",
+                            "title"     => "Logout",
+                            "route"     => "user/logout"
+                        ]
+
+                    ]
+                ]
             ]
         ]
     ],

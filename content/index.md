@@ -1,11 +1,12 @@
 ---
-title: "My title"
+title: "Webshop - E-commerce"
 ...
-Home
+Webshop - E-commerce
 =========================
 
-This is the homepage.
+Welcome to our Webshop. Here we are going to test a MailChimp implementation.
 
+You can subscribe to the mailinglist using the form in the sidebar by submitting your email using the form.
 
 [Add subscriber](mailchimp/subscribe)
 

@@ -10,12 +10,13 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
     public $defaultList;
     public $apiKey;
+    public $widget;
 
 
 
     public function init()
     {
-        $this->find("id", "1");
+        $this->findById(1);
     }
 
 
@@ -66,6 +67,7 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
     public function addSubscriber($email, $firstname = "", $lastname = "")
     {
+        // $defaultList = "ec0e68d734";
         $data = [
             "email_address" => $email,
             "status" => "subscribed",
@@ -76,7 +78,6 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
         ];
         $jsonData = json_encode($data);
         $result = $this->sendRequest("POST", "lists/" . $this->defaultList . "/members/", $jsonData);
-
         if ($result->status !== "subscribed") {
             throw new Exception($result->title . ": " . $result->detail);
         }
@@ -85,10 +86,10 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
 
 
-    public function getSubscribers()
+    public function getSubscribersDefaultList()
     {
-        $list = "ec0e68d734"; // temp hardcoded
-        return $this->sendRequest("GET", "lists/" . $list . "/members/")->members;
+        // $list = "ec0e68d734"; // temp hardcoded
+        return $this->sendRequest("GET", "lists/" . $this->defaultList . "/members/")->members;
     }
 
 
@@ -102,6 +103,15 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
     public function getAllLists()
     {
-
+        $listsDump = $this->sendRequest("GET", "lists/");
+        if ($listsDump !== null) {
+            $lists = $this->sendRequest("GET", "lists/")->lists;
+            return array_map(function ($list) {
+                return [
+                    $list->id => $list->name,
+                ];
+            }, $lists);
+        }
+        return null;
     }
 }

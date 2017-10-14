@@ -8,7 +8,7 @@ namespace Peto16\MailChimp;
 interface MailChimpInterface
 {
     public function addSubscriber($email, $firstname = "", $lastname = "");
-    public function getSubscribers();
+    public function getSubscribersDefaultList();
     public function getApiKey();
     public function getAllLists();
 }

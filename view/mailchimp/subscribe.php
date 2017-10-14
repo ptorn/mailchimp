@@ -13,7 +13,7 @@ namespace Anax\View;
 $items = isset($items) ? $items : null;
 $urlToCreate = url("");
 
-?><h1>Subscribe</h1>
+?>
+<!-- <h1>Subscribe</h1> -->
 
 <?= $form ?>
-<a href="<?= $urlToCreate ?>">Back</a>

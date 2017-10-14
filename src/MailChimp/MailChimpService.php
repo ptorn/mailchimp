@@ -25,17 +25,22 @@ class MailChimpService
         $this->mailChimp->init();
         $this->mailChimpList = new MailChimpList();
         $this->mailChimpList->setDb($di->get("db"));
-        $this->mailChimp->defaultlList = $this->getDefaultList();
+        $this->mailChimp->defaultList = $this->getDefaultList();
     }
 
 
 
     public function getDefaultList()
     {
-        return $this->mailChimpList->getDefaultList();
+        return $this->mailChimp->defaultList;
     }
 
 
+
+    public function getSubscribersDefaultList()
+    {
+        return $this->mailChimp->getSubscribersDefaultList();
+    }
 
     public function getAllLists()
     {
@@ -61,5 +66,20 @@ class MailChimpService
     public function getEndpointUrl()
     {
         return $this->mailChimp->getEndpointUrl();
+    }
+
+
+    public function getWidgetStatus()
+    {
+        return $this->mailChimp->widget;
+    }
+
+
+    public function addConfig($apiKey, $widget, $defaultList)
+    {
+        $this->mailChimp->apiKey = $apiKey;
+        $this->mailChimp->widget = $widget;
+        $this->mailChimp->defaultList = $defaultList;
+        return $this->mailChimp->save();
     }
 }

@@ -28,10 +28,9 @@ class Utils implements PageRenderInterface, InjectionAwareInterface
     public function renderPage($data, $status = 200)
     {
         $data["stylesheets"] = [
-            // "css/style.min.css",
             "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
             "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
-            "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            "css/style.min.css",
         ];
         $data["javascripts"] = [
             "https://code.jquery.com/jquery-3.2.1.slim.min.js",
@@ -80,6 +79,5 @@ class Utils implements PageRenderInterface, InjectionAwareInterface
 
         // Add Banner region and block.
         $view->add("layout/header", [], "header");
-        $view->add("block/header-me", [], "header-block");
     }
 }
