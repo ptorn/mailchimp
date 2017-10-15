@@ -32,7 +32,7 @@ $routes = $di->get("navbar")->routes();
                     aria-haspopup="true"
                     aria-expanded="false"
                 >
-                    <?= $route['title'] ?> <span class="caret"></span>
+                    <i class="fa fa-<?= $route['icon'] ?>"></i> <?= $route['title'] ?> <span class="caret"></span>
                 </a>
             <?php else : ?>
             <li class="<?= $di->get("navbar")->isActiveLink($route) ? "active" : "" ?> nav-item">
@@ -41,7 +41,7 @@ $routes = $di->get("navbar")->routes();
                     title="<?= $route['title'] ?>"
                     class="<?= $di->get("navbar")->isActiveLink($route) ? "active" : "" ?> nav-link"
                 >
-                    <?= $route['title'] ?>
+                    <i class="fa fa-<?= $route['icon'] ?>"></i> <?= $route['title'] ?>
                 </a>
             <?php endif ; ?>
 
@@ -55,7 +55,7 @@ $routes = $di->get("navbar")->routes();
                             title="<?= $submenu['title'] ?>"
                             class="<?= $di->get("navbar")->isActiveLink($submenu) ? "active" : "" ?> nav-link"
                         >
-                        <?= $submenu['title'] ?>
+                            <i class="fa fa-<?= $submenu['icon'] ?>"></i> <?= $submenu['title'] ?>
                         </a>
                     </li>
                     <?php endforeach; ?>

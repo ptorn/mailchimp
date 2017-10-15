@@ -30,7 +30,6 @@ class MailChimpController implements InjectionAwareInterface
         $this->mailChimp = new MailChimp();
         $this->mailChimp->setDb($this->di->get("db"));
         $this->mailChimp->init();
-        $this->mailChimpList = new MailChimpList();
         $this->response = $this->di->get("response");
         $this->request = $this->di->get("request");
         $this->view = $this->di->get("view");
@@ -96,6 +95,25 @@ class MailChimpController implements InjectionAwareInterface
                 "form" => $form->getHTML(),
             ];
             $this->view->add("mailchimp/subscribe", $data, "sidebar-right");
+        }
+    }
+
+
+
+    public function getPostPopup()
+    {
+        $popupCookie = isset($_COOKIE['popup']) ? $_COOKIE['popup'] : false;
+        if ($this->mailChimp->popup === 1 && $popupCookie != true) {
+            $title      = "Add email to mailinglist";
+            $form       = new SubscribeForm($this->di);
+
+            $form->check();
+
+            $data = [
+                "form" => $form->getHTML(),
+            ];
+            $this->view->add("mailchimp/popup", $data, "popup");
+            setcookie("popup", true);
         }
     }
 }

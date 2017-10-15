@@ -11,6 +11,7 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
     public $defaultList;
     public $apiKey;
     public $widget;
+    public $popup;
 
 
 
@@ -113,5 +114,12 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
             }, $lists);
         }
         return null;
+    }
+
+
+
+    public function getDefaultListData()
+    {
+        return $this->sendRequest("GET", "lists/" . $this->defaultList);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Peto16\Admin\HTMLForm;
+namespace Peto16\MailChimp\HTMLForm;
 
 use \Anax\HTMLForm\FormModel;
 use \Anax\DI\DIInterface;
@@ -31,12 +31,13 @@ class MailChimpConfigForm extends FormModel
         $this->form->create(
             [
                 "id" => __CLASS__,
-                "legend" => ""
+                "legend" => "",
             ],
             [
                 "ApiKey" => [
                     "type"        => "text",
                     "value"       => htmlspecialchars($mailChimpService->getApiKey()),
+                    // "class"       => "form-group col-xs-12 col-md-4 clearfix",
                     // "description" => "Here you can place a description.",
                     // "placeholder" => "Here is a placeholder",
                 ],
@@ -45,7 +46,7 @@ class MailChimpConfigForm extends FormModel
                     "type"        => "select",
                     "label"       => "Select your default mailinglist:",
                     "options"     => $allLists,
-                    "value"       => $mailChimpService->getDefaultList(),
+                    "value"       => $mailChimpService->getDefaultListId(),
                 ],
 
                 "Widget" => [
@@ -55,10 +56,16 @@ class MailChimpConfigForm extends FormModel
                     //"placeholder" => "Here is a placeholder",
                 ],
 
+                "Popup" => [
+                    "type"        => "checkbox",
+                    "checked"       => $mailChimpService->getPopupStatus() === 1 ? 1 : 0,
+                    "description" => "Popup frontpage",
+                ],
+
                 "submit" => [
                     "type" => "submit",
                     "value" => "Update",
-                    "callback" => [$this, "callbackSubmit"]
+                    "callback" => [$this, "callbackSubmit"],
                 ],
             ]
         );
@@ -81,11 +88,12 @@ class MailChimpConfigForm extends FormModel
         $widget = $this->form->value("Widget");
         $defaultList = $this->form->value("DefaultList");
         $apiKey = $apiKey === "" ? "null" : $apiKey;
-
+        $popup = $this->form->value("Popup");
         $mailChimpService = new MailChimpService($this->di);
 
+
         try {
-            $mailChimpService->addConfig($apiKey, $widget, $defaultList);
+            $mailChimpService->addConfig($apiKey, $widget, $popup, $defaultList);
         } catch (\Peto16\Admin\Exception $e) {
             $this->form->addOutput($e->getMessage());
             return false;

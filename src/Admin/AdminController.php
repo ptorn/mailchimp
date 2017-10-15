@@ -4,7 +4,7 @@ namespace Peto16\Admin;
 
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;
-use \Peto16\Admin\HTMLForm\MailChimpConfigForm;
+use \Peto16\MailChimp\HTMLForm\MailChimpConfigForm;
 
 class AdminController implements InjectionAwareInterface
 {
@@ -63,7 +63,7 @@ class AdminController implements InjectionAwareInterface
             $this->view->add("admin/mailchimpConfig", [
                 "apiKey"          => $this->mailChimpService->getApiKey(),
                 "endpointUrl"     => $this->mailChimpService->getEndpointUrl(),
-                "defaultList"     => $this->mailChimpService->getDefaultList(),
+                "defaultList"     => $this->mailChimpService->getDefaultListData(),
                 "form"            => $form->getHTML(),
             ], "main");
             $this->pageRender->renderPage(["title" => "MailChimp Configuration"]);
@@ -80,7 +80,7 @@ class AdminController implements InjectionAwareInterface
 
         $this->view->add("mailchimp/listsubscribers", [
             "data"  => $data,
-            "defaultListId"     => $this->mailChimpService->getDefaultList()
+            "defaultListId"     => $this->mailChimpService->getDefaultListId()
         ], "main");
         $this->pageRender->renderPage(["title" => "MailChimp Subscribers"]);
     }

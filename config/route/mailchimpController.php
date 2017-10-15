@@ -24,7 +24,7 @@ return [
             "info" => "List subscribers",
             "requestMethod" => "get",
             "path" => "listsubscribers",
-            "callable" => ["mailChimpController", "getListSubscribers"],
+            "callable" => ["mailChimpController", "getListSubscribersJSON"],
         ],
     ],
 ];

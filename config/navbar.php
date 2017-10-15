@@ -6,37 +6,43 @@ return [
         ],
         "items" => [
             "frontpage" => [
-                "icon"  => "home",
-                "title"  => "Start",
-                "route" => "",
+                "icon"      => "home",
+                "title"     => "Start",
+                "route"     => "",
+                "available" => null
+
             ],
             "login" => [
                 "icon"  => "lock",
                 "title"  => "Login",
                 "route" => "user/login",
+                "available" => null
             ],
             "logout" => [
                 "icon"  => "lock",
                 "title"  => "Admin",
-                "route" => "admin",
+                "route" => "#",
+                "available" => "administrator",
                 "submenu" => [
                     "items" => [
                         "dashboard" => [
-                            "icon"      => "home",
+                            "icon"      => "dashboard",
                             "title"     => "Dashboard",
                             "route"     => "admin",
+                            "available" => "administrator",
                         ],
                         "mailchimp" => [
-                            "icon"      => "TBA",
+                            "icon"      => "envelope",
                             "title"     => "MailChimp",
-                            "route"     => "admin/mailchimp"
+                            "route"     => "admin/mailchimp",
+                            "available" => "administrator",
                         ],
                         "logout" => [
-                            "icon"      => "TBA",
+                            "icon"      => "sign-out",
                             "title"     => "Logout",
-                            "route"     => "user/logout"
+                            "route"     => "user/logout",
+                            "available" => "administrator",
                         ]
-
                     ]
                 ]
             ]
@@ -48,14 +54,16 @@ return [
         ],
         "items" => [
             "github" => [
-                "icon"  => "github",
-                "title"  => "Github",
-                "route" => "https://github.com/ptorn/mailchimp",
+                "icon"      => "github",
+                "title"     => "Github",
+                "route"     => "https://github.com/ptorn/mailchimp",
+                "available" => null,
             ],
             "email" => [
-                "icon"  => "envelope",
-                "title"  => "E-post",
-                "route" => "mailto:peder.tornberg@gmail.com",
+                "icon"      => "envelope",
+                "title"     => "E-post",
+                "route"     => "mailto:peder.tornberg@gmail.com",
+                "available" => null,
             ]
         ]
     ]

@@ -57,12 +57,21 @@ class Navbar implements ConfigureInterface, InjectionAwareInterface
      */
     private function createNavRoutes($level)
     {
+        // Prepare Menu array to only show certain items for logged in users.
+        $level['items'] = array_filter($level['items'], function ($item) {
+            if ($item['available'] === "administrator" &&
+                $this->isLoggedIn() === false) {
+                return false;
+            }
+            return true;
+        });
         return array_map(function ($item) {
             if (array_key_exists("submenu", $item)) {
                 return [
                     "title"     => $item['title'],
                     "icon"      => $item['icon'],
                     "route"     => $item['route'],
+                    "available" => $item['available'],
                     "url"       => $this->di->get("url")->create($item['route']),
                     "submenu"   => $this->createNavRoutes($item['submenu'])
                 ];
@@ -71,6 +80,7 @@ class Navbar implements ConfigureInterface, InjectionAwareInterface
                 "title" => $item['title'],
                 "icon"  => $item['icon'],
                 "route" => $item['route'],
+                "available" => $item['available'],
                 "url"   => $this->di->get("url")->create($item['route'])
             ];
         }, $level['items']);

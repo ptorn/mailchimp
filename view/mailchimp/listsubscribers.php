@@ -19,7 +19,7 @@ foreach ($data as $subscriber) {
         <tr>
             <th>Email</th>
             <th>Firstname</th>
-            <th>LastName</th>
+            <th>Lastname</th>
         </tr>
     </thead>
     <tbody>

@@ -7,6 +7,9 @@
         <?php foreach ($stylesheets as $stylesheet) : ?>
             <link rel="stylesheet" type="text/css" href="<?= $this->asset($stylesheet) ?>">
         <?php endforeach; ?>
+        <?php foreach ($javascripts as $javascript) : ?>
+            <script src="<?= $this->asset($javascript) ?>"></script>
+        <?php endforeach; ?>
     </head>
     <body>
         <?php if ($this->regionHasContent("navbar")) : ?>
@@ -18,40 +21,40 @@
             </div>
         </div>
         <?php endif; ?>
+
         <div class="container-fluid">
-
-        <?php if ($this->regionHasContent("header")) : ?>
-        <div class="header">
-            <div class="row-fluid">
-                <div class="header">
-                    <?php $this->renderRegion("header") ?>
+            <?php if ($this->regionHasContent("header")) : ?>
+            <div class="header">
+                <div class="row-fluid">
+                    <div class="header">
+                        <?php $this->renderRegion("header") ?>
+                    </div>
                 </div>
             </div>
-        </div>
-        <?php endif; ?>
-        <div class="container mt-20">
-            <div class="row-fluid">
-            <?php if ($this->regionHasContent("main")) : ?>
+            <?php endif; ?>
+            <div class="container mt-20">
+                <div class="row-fluid">
+                <?php if ($this->regionHasContent("main")) : ?>
+                    <?php if ($this->regionHasContent("sidebar-right")) : ?>
+                        <main id="main" class="col-xs-12 col-md-9 main mb-20">
+                    <?php else : ?>
+                        <main id="main" class="col-xs-12 col-md-12 main mb-20">
+                    <?php endif ; ?>
+                        <?php $this->renderRegion("main") ?>
+                        <?php if ($this->regionHasContent("main")) : ?>
+                            <?php $this->renderRegion("comments") ?>
+                        <?php endif; ?>
+                    </main>
+                <?php endif; ?>
+
                 <?php if ($this->regionHasContent("sidebar-right")) : ?>
-                    <main id="main" class="col-xs-12 col-md-9 main mb-20">
-                <?php else : ?>
-                    <main id="main" class="col-xs-12 col-md-12 main mb-20">
-                <?php endif ; ?>
-                    <?php $this->renderRegion("main") ?>
-                    <?php if ($this->regionHasContent("main")) : ?>
-                        <?php $this->renderRegion("comments") ?>
-                    <?php endif; ?>
-                </main>
-            <?php endif; ?>
-
-            <?php if ($this->regionHasContent("sidebar-right")) : ?>
-                <div class="col-xs-12 col-md-3 sidebar-right">
-                    <?php $this->renderRegion("sidebar-right") ?>
+                    <div class="col-xs-12 col-md-3 sidebar-right">
+                        <?php $this->renderRegion("sidebar-right") ?>
+                    </div>
+                <?php endif; ?>
                 </div>
-            <?php endif; ?>
             </div>
         </div>
-    </div>
 
         <div id="footer" class="footer">
             <?php if ($this->regionHasContent("footer")) : ?>
@@ -66,11 +69,8 @@
             </div>
         <?php endif; ?>
         </div>
-
-        <?php foreach ($javascripts as $javascript) : ?>
-            <script src="<?= $this->asset($javascript) ?>"></script>
-        <?php endforeach; ?>
-
-
+        <?php if ($this->regionHasContent("popup")) : ?>
+            <?php $this->renderRegion("popup") ?>
+        <?php endif; ?>
     </body>
 </html>

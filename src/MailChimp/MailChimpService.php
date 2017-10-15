@@ -9,7 +9,6 @@ class MailChimpService
 {
 
     private $mailChimp;
-    private $mailChimpList;
 
 
 
@@ -23,16 +22,18 @@ class MailChimpService
         $this->mailChimp = new MailChimp();
         $this->mailChimp->setDb($di->get("db"));
         $this->mailChimp->init();
-        $this->mailChimpList = new MailChimpList();
-        $this->mailChimpList->setDb($di->get("db"));
-        $this->mailChimp->defaultList = $this->getDefaultList();
+
+    }
+
+    public function getDefaultListId()
+    {
+        return $this->mailChimp->defaultList;
     }
 
 
-
-    public function getDefaultList()
+    public function getDefaultListData()
     {
-        return $this->mailChimp->defaultList;
+        return $this->mailChimp->getDefaultListData();
     }
 
 
@@ -75,10 +76,17 @@ class MailChimpService
     }
 
 
-    public function addConfig($apiKey, $widget, $defaultList)
+    public function getPopupStatus()
+    {
+        return $this->mailChimp->popup;
+    }
+
+
+    public function addConfig($apiKey, $widget, $popup, $defaultList)
     {
         $this->mailChimp->apiKey = $apiKey;
         $this->mailChimp->widget = $widget;
+        $this->mailChimp->popup = $popup;
         $this->mailChimp->defaultList = $defaultList;
         return $this->mailChimp->save();
     }
