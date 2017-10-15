@@ -5,7 +5,7 @@ $routes = $di->get("navbar")->routes();
 ?>
 
 <nav class="navbar navbar-default">
-  <!-- <div class="container-fluid"> -->
+
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -45,7 +45,7 @@ $routes = $di->get("navbar")->routes();
                 </a>
             <?php endif ; ?>
 
-
+                <!-- Submenu -->
                 <?php if (array_key_exists("submenu", $route)) : ?>
                 <ul class="dropdown-menu">
                     <?php foreach ($route["submenu"] as $submenu) : ?>
@@ -65,5 +65,4 @@ $routes = $di->get("navbar")->routes();
             <?php endforeach; ?>
         </ul>
     </div><!-- /.navbar-collapse -->
-  <!-- </div><!-- /.container-fluid -->
 </nav>
