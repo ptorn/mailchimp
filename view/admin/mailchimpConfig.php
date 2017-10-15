@@ -6,7 +6,6 @@ $endpointUrl = isset($endpointUrl) ? htmlspecialchars($endpointUrl) : "-";
 $defaultListName = isset($defaultList->name) ? htmlspecialchars($defaultList->name) : "-";
 $defaultListId = isset($defaultList->id) ? htmlspecialchars($defaultList->id) : "-";
 
-// var_dump($defaultList);
 $logoutUrl = url("user/logout");
 ?>
 <h1>MailChimp Configuration</h1>

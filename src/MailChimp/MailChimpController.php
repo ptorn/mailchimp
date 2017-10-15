@@ -7,7 +7,7 @@ use \Anax\DI\InjectionAwareTrait;
 use \Peto16\MailChimp\HTMLForm\SubscribeForm;
 
 /**
- * Controller for Login
+ * Controller for MailChimpController
  */
 class MailChimpController implements InjectionAwareInterface
 {
@@ -38,24 +38,9 @@ class MailChimpController implements InjectionAwareInterface
 
 
 
-    public function getAccount()
-    {
-        $this->response->sendJson($this->mailChimp->sendRequest("GET", ["reports"]));
-        exit;
-    }
-
-
-
-    public function getList()
-    {
-        $this->response->sendJson($this->mailChimp->sendRequest("GET", "/lists"));
-        exit;
-    }
-
-
-
     /**
      * Add recipient to list
+     * @return void
      */
     public function getPostSubscriber()
     {
@@ -74,6 +59,10 @@ class MailChimpController implements InjectionAwareInterface
 
 
 
+    /**
+     * Get list of subscribers as JSON.
+     * @return void
+     */
     public function getListSubscribersJSON()
     {
         $data = $this->mailChimp->getSubscribersDefaultList();
@@ -83,6 +72,10 @@ class MailChimpController implements InjectionAwareInterface
 
 
 
+    /**
+     * If activated create view with block for sidebar.
+     * @return void
+     */
     public function getPostBlockSidebar()
     {
         if ($this->mailChimp->widget === 1) {
@@ -100,6 +93,10 @@ class MailChimpController implements InjectionAwareInterface
 
 
 
+    /**
+     * If activated create view for popup subscription form.
+     * @return [type] [description]
+     */
     public function getPostPopup()
     {
         $popupCookie = isset($_COOKIE['popup']) ? $_COOKIE['popup'] : false;

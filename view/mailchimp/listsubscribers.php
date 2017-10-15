@@ -1,7 +1,5 @@
 <?php
-
 $output = "";
-
 foreach ($data as $subscriber) {
     $output .= "<tr>";
     $output .= "<td>" . $subscriber->email_address . "</td>";
@@ -10,9 +8,7 @@ foreach ($data as $subscriber) {
     $output .= "</tr>";
 }
 ?>
-
-
-<h1>Subscribers to <?= $defaultListId ?></h1>
+<h1>Subscribers to <?= $defaultListData->name ?> (<?= $defaultListData->id ?>)</h1>
 
 <table class="table table-hover">
     <thead>

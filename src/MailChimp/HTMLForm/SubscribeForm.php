@@ -7,7 +7,7 @@ use \Anax\DI\DIInterface;
 use \Peto16\MailChimp\MailChimpService;
 
 /**
- * Example of FormModel implementation.
+ * SubscribeForm.
  */
 class SubscribeForm extends FormModel
 {
@@ -29,19 +29,13 @@ class SubscribeForm extends FormModel
                 "Email" => [
                     "type"        => "email",
                     "required"    => true,
-                    // "description" => "Here you can place a description.",
-                    // "placeholder" => "Here is a placeholder",
                 ],
 
                 "Firstname" => [
                     "type"        => "text",
-                    //"description" => "Here you can place a description.",
-                    //"placeholder" => "Here is a placeholder",
                 ],
                 "Lastname" => [
                     "type"        => "text",
-                    //"description" => "Here you can place a description.",
-                    //"placeholder" => "Here is a placeholder",
                 ],
 
                 "submit" => [
@@ -78,7 +72,7 @@ class SubscribeForm extends FormModel
             $this->form->addOutput($e->getMessage());
             return false;
         }
-        // return true;
+
         $this->form->addOutput("Subscriber added.");
         return true;
     }

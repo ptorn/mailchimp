@@ -16,23 +16,30 @@ class AdminController implements InjectionAwareInterface
     private $view;
     private $mailChimpService;
 
+
+
+    /**
+     * Method to initiate all the dependencies.
+     * @return void
+     */
     public function init()
     {
         $this->userService = $this->di->get("userService");
-        // $this->response = $this->di->get("response");
-        // $this->request = $this->di->get("request");
         $this->response = $this->di->get("response");
         $this->view = $this->di->get("view");
         $this->pageRender = $this->di->get("pageRender");
         $this->mailChimpService = $this->di->get("mailChimpService");
-
     }
 
 
+
+    /**
+     * Create view and setup the dashboard.
+     * @return void
+     */
     public function getDashboard()
     {
         $user = $this->userService->getCurrentLoggedInUser();
-
         $users = [];
         if ($user) {
             if ($user->administrator) {
@@ -50,6 +57,10 @@ class AdminController implements InjectionAwareInterface
 
 
 
+    /**
+     * Create view for MailChimp dashboard.
+     * @return void
+     */
     public function getMailChimp()
     {
         $user = $this->userService->getCurrentLoggedInUser();
@@ -73,6 +84,10 @@ class AdminController implements InjectionAwareInterface
 
 
 
+    /**
+     * Create view to list all subscribers of defaultList
+     * @return void
+     */
     public function getListSubscribers()
     {
         $data = $this->mailChimpService->getSubscribersDefaultList();
@@ -80,7 +95,7 @@ class AdminController implements InjectionAwareInterface
 
         $this->view->add("mailchimp/listsubscribers", [
             "data"  => $data,
-            "defaultListId"     => $this->mailChimpService->getDefaultListId()
+            "defaultListData"   => $this->mailChimpService->getDefaultListData()
         ], "main");
         $this->pageRender->renderPage(["title" => "MailChimp Subscribers"]);
     }

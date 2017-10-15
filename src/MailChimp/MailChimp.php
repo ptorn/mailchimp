@@ -4,6 +4,9 @@ namespace Peto16\MailChimp;
 
 use \Anax\Database\ActiveRecordModel;
 
+/**
+ * MailChimp ActiveRecordModel.
+ */
 class MailChimp extends ActiveRecordModel implements MailChimpInterface
 {
     protected $tableName = "mailchimp_Config";
@@ -15,6 +18,10 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
 
 
+    /**
+     * Method to populate the model.
+     * @return void
+     */
     public function init()
     {
         $this->findById(1);
@@ -22,6 +29,10 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
 
 
+    /**
+     * Generate endpoint url based upon the apiKey.
+     * @return string       The url for the endpoint
+     */
     public function getEndpointUrl()
     {
         // Datacenter based on apiKey
@@ -31,6 +42,13 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
 
 
+    /**
+     * Send the request to MailChimp.
+     * @param  string $method Like GET|POST
+     * @param  string $path   Path to append to the url for the endpoint.
+     * @param  object $data   JSON object with the payload.
+     * @return object         Returning a decoded JSON object.
+     */
     public function sendRequest($method, $path, $data = null)
     {
         $url = $this->getEndpointUrl();
@@ -55,7 +73,6 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
                 break;
             default:
-                # code...
                 break;
         }
         $head = curl_exec($ch);
@@ -66,9 +83,15 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
 
 
+    /**
+     * Add subscriber to the defaultList
+     * @param string $email     Email address
+     * @param string $firstname Firstname
+     * @param string $lastname  Lastname
+     * @return boolean          Return true if successfull or thorw an exception.
+     */
     public function addSubscriber($email, $firstname = "", $lastname = "")
     {
-        // $defaultList = "ec0e68d734";
         $data = [
             "email_address" => $email,
             "status" => "subscribed",
@@ -87,14 +110,21 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
 
 
+    /**
+     * Get the subscribers from the default list.
+     * @return object With members of default list.
+     */
     public function getSubscribersDefaultList()
     {
-        // $list = "ec0e68d734"; // temp hardcoded
         return $this->sendRequest("GET", "lists/" . $this->defaultList . "/members/")->members;
     }
 
 
 
+    /**
+     * Get apiKey from storage.
+     * @return string MailChimp ApiKey.
+     */
     public function getApiKey()
     {
         return $this->apiKey;
@@ -102,6 +132,10 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
 
 
+    /**
+     * Get all lists to the MaiChimp account.
+     * @return object Return an object with all lists or return null.
+     */
     public function getAllLists()
     {
         $listsDump = $this->sendRequest("GET", "lists/");
@@ -118,6 +152,10 @@ class MailChimp extends ActiveRecordModel implements MailChimpInterface
 
 
 
+    /**
+     * Get data of the default list.
+     * @return object Returns the object of the default list.
+     */
     public function getDefaultListData()
     {
         return $this->sendRequest("GET", "lists/" . $this->defaultList);

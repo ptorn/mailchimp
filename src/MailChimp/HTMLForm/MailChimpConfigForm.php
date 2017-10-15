@@ -7,7 +7,7 @@ use \Anax\DI\DIInterface;
 use \Peto16\MailChimp\MailChimpService;
 
 /**
- * Example of FormModel implementation.
+ * MailChimpConfigForm.
  */
 class MailChimpConfigForm extends FormModel
 {
@@ -37,9 +37,6 @@ class MailChimpConfigForm extends FormModel
                 "ApiKey" => [
                     "type"        => "text",
                     "value"       => htmlspecialchars($mailChimpService->getApiKey()),
-                    // "class"       => "form-group col-xs-12 col-md-4 clearfix",
-                    // "description" => "Here you can place a description.",
-                    // "placeholder" => "Here is a placeholder",
                 ],
 
                 "DefaultList" => [
@@ -53,7 +50,6 @@ class MailChimpConfigForm extends FormModel
                     "type"        => "checkbox",
                     "checked"       => $mailChimpService->getWidgetStatus() === 1 ? 1 : 0,
                     "description" => "Widget for sidebar.",
-                    //"placeholder" => "Here is a placeholder",
                 ],
 
                 "Popup" => [
@@ -91,14 +87,12 @@ class MailChimpConfigForm extends FormModel
         $popup = $this->form->value("Popup");
         $mailChimpService = new MailChimpService($this->di);
 
-
         try {
             $mailChimpService->addConfig($apiKey, $widget, $popup, $defaultList);
         } catch (\Peto16\Admin\Exception $e) {
             $this->form->addOutput($e->getMessage());
             return false;
         }
-        // return true;
         $this->form->addOutput("Configuration updated.");
         return true;
     }
