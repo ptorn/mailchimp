@@ -8,13 +8,21 @@ $mailChimpUrl = url("admin/mailchimp");
 ?>
 <h1>Welcome to the Dashboard</h1>
 
+
 <p>Du är inloggad som <?= $user->firstname . " " . $user->lastname ; ?></p>
-<img src="<?= $gravatarUrl; ?>">
-<div class="User-info">
-    <span>Förnamn: </span><?= $user->firstname; ?><br>
-    <span>Efternamn: </span><?= $user->lastname; ?><br>
-    <span>Epost: </span><?= $user->email; ?><br>
-    <span>Aktiverad: </span><?= $user->enabled; ?><br>
-    <span>Administrator: </span><?= $user->administrator; ?>
+
+<div class="row">
+    <div class="col-md-2 col-xs-12">
+        <img src="<?= $gravatarUrl; ?>">
+    </div>
+    <div class="col-md-10 col-xs-12">
+        <ul class="list-group col-md-5">
+            <li class="list-group-item"><strong>Förnamn: </strong><?= $user->firstname; ?></li>
+            <li class="list-group-item"><strong>Efternamn: </strong><?= $user->lastname; ?></li>
+            <li class="list-group-item"><strong>Epost: </strong><?= $user->email; ?></li>
+            <li class="list-group-item"><strong>Aktiverad: </strong><?= $user->enabled; ?></li>
+            <li class="list-group-item"><strong>Administrator: </strong><?= $user->administrator; ?></li>
+        </ul>
+    </div>
 </div>
 <a href="<?= $editUrl ?>">Uppdatera</a> | <a href="<?= $logoutUrl ?>">Logga Ut</a>
