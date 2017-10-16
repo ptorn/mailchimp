@@ -5,6 +5,8 @@ namespace Peto16\MailChimp;
 use \Anax\DI\InjectionAwareInterface;
 use \Anax\DI\InjectionAwareTrait;
 use \Peto16\MailChimp\HTMLForm\SubscribeForm;
+use \Peto16\MailChimp\HTMLForm\PopupSubscribeForm;
+
 
 /**
  * Controller for MailChimpController
@@ -100,15 +102,17 @@ class MailChimpController implements InjectionAwareInterface
     public function getPostPopup()
     {
         $popupCookie = isset($_COOKIE['popup']) ? $_COOKIE['popup'] : false;
-        if ($this->mailChimp->popup === 1 && $popupCookie != true) {
+        // if ($this->mailChimp->popup === 1 && $popupCookie != true) {
             $title      = "Add email to mailinglist";
-            $form       = new SubscribeForm($this->di);
+            $form       = new PopupSubscribeForm($this->di);
 
             $form->check();
 
             $data = [
                 "form" => $form->getHTML(),
             ];
+        if ($this->mailChimp->popup === 1 && $popupCookie != true) {
+
             $this->view->add("mailchimp/popup", $data, "popup");
             setcookie("popup", true);
         }
